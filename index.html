@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>星之庭院 | 个人主页</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&family=Nunito:wght@400;600;700&display=swap');
+
+        :root {
+            --accent: #7f6bff;
+            --accent-light: rgba(127, 107, 255, 0.15);
+            --text-primary: #1b1b32;
+            --text-secondary: #4f4f75;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 40px 20px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background:
+                radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.25) 0, rgba(255, 255, 255, 0) 60%),
+                radial-gradient(circle at 80% 0, rgba(255, 255, 255, 0.35) 0, rgba(255, 255, 255, 0) 55%),
+                linear-gradient(130deg, #151b3d 0%, #202a63 40%, #764ad6 100%);
+            color: var(--text-primary);
+            font-family: 'Nunito', Arial, sans-serif;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url('./img/background.jpg') center/cover no-repeat;
+            opacity: 0.18;
+            filter: blur(2px);
+            z-index: 0;
+        }
+
+        body::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image:
+                radial-gradient(2px 2px at 20px 20px, rgba(255, 255, 255, 0.45), transparent),
+                radial-gradient(1.5px 1.5px at 60px 60px, rgba(255, 255, 255, 0.35), transparent),
+                radial-gradient(1px 1px at 30px 90px, rgba(255, 255, 255, 0.3), transparent);
+            background-size: 120px 120px;
+            opacity: 0.6;
+            z-index: 0;
+        }
+
+        .page {
+            position: relative;
+            width: 80vw;
+            height: 80vh;
+            max-width: 1050px;
+            max-height: 900px;
+            min-width: 320px;
+            min-height: 400px;
+            background: rgba(248, 247, 255, 0.92);
+            border-radius: 28px;
+            padding: 40px 48px;
+            box-shadow: 0 16px 45px rgba(13, 9, 43, 0.35);
+            z-index: 1;
+            backdrop-filter: blur(8px);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 36px;
+        }
+
+        .hero h1 {
+            margin: 0;
+            font-family: 'ZCOOL KuaiLe', cursive;
+            font-size: clamp(2.2rem, 5vw, 3.2rem);
+            color: #3820a9;
+            letter-spacing: 3px;
+        }
+
+        .theme-toggle {
+            position: absolute;
+            top: 12px;
+            right: 16px;
+            padding: 8px 14px;
+            border-radius: 20px;
+            border: 1px solid rgba(127,107,255,0.4);
+            background: rgba(255,255,255,0.55);
+            backdrop-filter: blur(6px);
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #3820a9;
+            cursor: pointer;
+            transition: background .3s,color .3s, box-shadow .3s;
+        }
+        .theme-toggle:hover { background: rgba(255,255,255,0.75); }
+        .theme-toggle:focus-visible { outline:2px solid #5d46ff; outline-offset:2px; }
+
+        .nav-buttons {
+            margin-top: 16px;
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .nav-btn {
+            padding: 10px 22px;
+            border-radius: 999px;
+            border: 1px solid rgba(127,107,255,0.4);
+            background: rgba(255,255,255,0.7);
+            backdrop-filter: blur(6px);
+            font-weight: 600;
+            color: #3820a9;
+            cursor: pointer;
+            transition: background .3s, transform .3s, box-shadow .3s;
+        }
+        .nav-btn:hover { background: rgba(255,255,255,0.9); transform: translateY(-3px); box-shadow: 0 6px 16px rgba(13,9,43,0.25); }
+        body.dark .nav-btn { background: rgba(70,60,130,0.55); color:#e2e2f7; border-color: rgba(170,160,255,0.4); }
+        body.dark .nav-btn:hover { background: rgba(90,75,160,0.65); }
+
+        body.dark {
+            color: #e2e2f7;
+        }
+        body.dark .page {
+            background: rgba(25, 25, 42, 0.9);
+            box-shadow: 0 16px 45px rgba(5,5,20,0.6);
+        }
+        body.dark .hero h1 { color: #c9b7ff; }
+        body.dark .hero p { color: #b2b2d6; }
+        body.dark .profile-section { background: rgba(40,40,70,0.85); box-shadow: 0 10px 28px rgba(20,20,40,0.5); }
+        body.dark .avatar-panel { background: linear-gradient(180deg, rgba(80,60,150,0.7), rgba(60,40,110,0.5)); }
+        body.dark .avatar-panel h2 { color:#fff; }
+        body.dark .about-slider h2, body.dark .about-slider h3 { color:#d8d4ff; }
+        body.dark a { color:#a99cff; }
+        body.dark .theme-toggle { background: rgba(70,60,130,0.55); color:#e2e2f7; border-color: rgba(170,160,255,0.4); }
+        body.dark .theme-toggle:hover { background: rgba(90,75,160,0.65); }
+        body.dark .footer { color: rgba(200,200,230,0.75); }
+
+        .hero p {
+            margin: 12px auto 0;
+            max-width: 560px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .profile-section {
+            display: grid;
+            grid-template-columns: minmax(0,1fr) minmax(0,1.6fr);
+            gap: 32px;
+            background: rgba(255, 255, 255, 0.85);
+            border-radius: 22px;
+            padding: 32px;
+            box-shadow: 0 10px 28px rgba(90, 76, 170, 0.15);
+            /* 限制不超过页面容器的 80%，允许在需要时收缩 */
+            max-height: 80%;
+            flex: 0 1 80%;
+            min-height: 0;
+            overflow: hidden; /* 仅裁掉装饰性溢出，不裁剪右侧内部滚动 */
+        }
+
+        .avatar-panel {
+            position: relative;
+            background: linear-gradient(180deg, rgba(127, 107, 255, 0.7), rgba(118, 74, 214, 0.4));
+            border-radius: 20px;
+            padding: 24px 20px 32px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            overflow: hidden;
+        }
+
+        .avatar-panel::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url('./img/avatar_back.jpg') center/cover no-repeat;
+            mix-blend-mode: lighten;
+            opacity: 0.35;
+        }
+
+        .avatar-panel img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            border-radius: 18px;
+            border: 3px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+            z-index: 1;
+            animation: float 6s ease-in-out infinite;
+            max-height: clamp(140px, 30vh, 220px); /* 保证高度不超过整体约1/3 */
+        }
+
+        .avatar-panel h2 {
+            margin: 24px 0 0;
+            color: #fff;
+            font-family: 'ZCOOL KuaiLe', cursive;
+            text-shadow: 0 4px 15px rgba(44, 26, 90, 0.6);
+            z-index: 1;
+        }
+
+        .avatar-panel button {
+            margin-top: 18px;
+            padding: 10px 28px;
+            border: none;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.9);
+            color: #4b2fbf;
+            font-weight: 600;
+            cursor: pointer;
+            z-index: 1;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .avatar-panel button:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 22px rgba(0, 0, 0, 0.25);
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .info-section {
+            display: flex;
+            flex-direction: column;
+            min-height: 0; /* 允许子元素滚动 */
+        }
+
+        /* 简化内容容器，取消绝对定位堆叠 */
+        .about-content {
+            flex: 1 1 auto;
+            min-height: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+
+
+        .footer {
+            margin-top: 44px;
+            text-align: center;
+            font-size: 0.9rem;
+            color: rgba(27, 27, 50, 0.7);
+        }
+        .about-slider {
+            flex: 1 1 auto;
+            min-height: 0;
+            overflow-y: auto;
+            padding-right: 8px;
+        }
+
+        @media (max-width: 900px) {
+            body {
+                padding: 30px 12px;
+            }
+
+            .page {
+                padding: 32px 22px;
+                height: auto; /* 移动端允许内容自然高度避免截断 */
+            }
+
+            .profile-section {
+                grid-template-columns: 1fr;
+            }
+
+            .avatar-panel {
+                flex-direction: row;
+                gap: 20px;
+            }
+
+            .avatar-panel img {
+                max-width: 160px;
+            }
+
+            .avatar-panel h2 {
+                font-size: 1.4rem;
+            }
+        }
+        /* 更小屏幕：进一步优化排版与尺寸 */
+        @media (max-width: 600px) {
+            .hero h1 { font-size: clamp(1.8rem, 7vw, 2.4rem); }
+            .hero p { font-size: 0.9rem; }
+            .profile-section { gap: 24px; padding: 26px 20px; }
+            .avatar-panel { padding: 20px 16px 24px; }
+            .avatar-panel img { max-height: clamp(120px, 28vh, 180px); }
+            .about-slider { -webkit-overflow-scrolling: touch; }
+        }
+        @media (max-width: 400px) {
+            body { padding: 24px 10px; }
+            .page { padding: 26px 18px; }
+            .profile-section { padding: 22px 16px; gap: 18px; }
+            .avatar-panel img { max-height: clamp(100px, 26vh, 150px); }
+            .avatar-panel h2 { font-size: 1.2rem; margin-top: 16px; }
+            .hero p { font-size: 0.8rem; }
+        }
+    </style>
+</head>
+<body>
+    <main class="page">
+        <header class="hero">
+            <h1>SHINJI.REN</h1>
+            <p>欢迎来到小赵|Eric Zhao的短链接服务</p>
+            <div class="nav-buttons" aria-label="主导航">
+                <button class="nav-btn" type="button" onclick="location.href='https://www.ericzhao3366.work'" aria-label="前往主页">主页</button>
+                <button class="nav-btn" type="button" onclick="location.href='https://blog.ericzhao3366.work'" aria-label="前往博客">博客</button>
+            </div>
+            <button class="theme-toggle" id="themeToggle" aria-pressed="false" aria-label="切换深色模式">深色模式</button>
+        </header>
+
+        <section class="profile-section">
+            <div class="avatar-panel">
+                <img src="https://q1.qlogo.cn/g?b=qq&nk=3177261635&s=640" alt="小赵EricZhao">
+            </div>
+            <div class="info-section">
+                <div class="about-content">
+                    <div class="about-slider">
+                        <h2>About Me | 关于我</h2>
+                        <p><strong>联系我：</strong>📧 <a href="mailto:ericzhao3366@dingtalk.com">Mail</a></p>
+                        <h3>成分概览</h3>
+                        <ul>
+                            <li><strong>拍些什么：</strong>交通 / 云 / 花草树木 / 建筑</li>
+                            <li><strong>研究什么：</strong>飞机 / 航空 / 交通</li>
+                            <li><strong>爱吃什么：</strong>三文鱼</li>
+                            <li><strong>喜欢什么：</strong>小豆泥（Azukisan） / 飞机 / 电影</li>
+                        </ul>
+                        <h3>其他特点</h3>
+                        <p>16Personalities: 指挥官 (ENTJ-T)[2024/01/23]</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="footer">
+            © 2025 EricZhao | 感谢驻足，愿你的旅程永远满载星光。</p>
+            如有侵犯版权，请携带标题【版权】联系📧 <a href="mailto:ericzhao3366@dingtalk.com">Mail</a>删除
+        </footer>
+    </main>
+    <script>
+    (function(){
+        var key = 'theme';
+        var btn = document.getElementById('themeToggle');
+        // 时间自动检测：18:00-06:00 视为夜间
+        function isNight(){
+            var h = new Date().getHours();
+            return (h >= 18 || h < 6);
+        }
+        function apply(dark){
+            document.body.classList.toggle('dark', dark);
+            btn.setAttribute('aria-pressed', dark ? 'true':'false');
+            btn.textContent = dark ? '浅色模式' : '深色模式';
+        }
+        var stored = localStorage.getItem(key);
+        if(stored){
+            apply(stored === 'dark');
+        } else {
+            apply(isNight());
+        }
+        function manualToggle(){
+            var willDark = !document.body.classList.contains('dark');
+            apply(willDark);
+            localStorage.setItem(key, willDark ? 'dark' : 'light');
+        }
+        // 若用户未手动选择，则每 30 分钟重新检测时间（避免长时间停留页面时不更新）
+        setInterval(function(){
+            if(!localStorage.getItem(key)){
+                apply(isNight());
+            }
+        }, 30 * 60 * 1000);
+        btn.addEventListener('click', manualToggle);
+    })();
+    </script>
+</body>
+</html>
