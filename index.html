@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>星之庭院 | 个人主页</title>
+    <title>SHINJI.REN | 小赵短链接</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&family=Nunito:wght@400;600;700&display=swap');
 
@@ -314,6 +314,11 @@
             .avatar-panel h2 { font-size: 1.2rem; margin-top: 16px; }
             .hero p { font-size: 0.8rem; }
         }
+        /* Sakura falling effect (fixed: separate top + transform animations) */
+        .sakura{position:fixed;inset:0;pointer-events:none;z-index:10}
+        .sakura .petal{position:absolute;top:-40px;width:14px;height:12px;background:radial-gradient(circle at 30% 30%,#ffd7e8 0%,#ff9fc6 60%,#ff7ab4 100%);border-radius:60% 40% 70% 30%;opacity:.85;box-shadow:0 0 4px #fff5;will-change:top,transform}
+        @keyframes fallY{to{top:110vh}}
+        @keyframes swayX{0%,100%{transform:translateX(0) rotate(0deg)}50%{transform:translateX(70px) rotate(150deg)}}
     </style>
 </head>
 <body>
@@ -387,8 +392,28 @@
                 apply(isNight());
             }
         }, 30 * 60 * 1000);
-        btn.addEventListener('click', manualToggle);
+                btn.addEventListener('click', manualToggle);
     })();
     </script>
+        <script>
+        // Sakura falling petals
+                (function(){
+                    const MAX=160,container=document.createElement('div');
+                    container.className='sakura';document.body.appendChild(container);
+                    function spawn(){
+                        if(container.childElementCount>MAX) return;
+                        const p=document.createElement('div');p.className='petal';
+                        const dur=12+Math.random()*10,delay=Math.random()*5,left=Math.random()*100,sway=6+Math.random()*6,scale=.7+Math.random()*0.8;
+                        p.style.left=left+'vw';
+                        p.style.transform='scale('+scale+')';
+                        p.style.animation=`fallY ${dur}s linear ${delay}s forwards, swayX ${sway}s ease-in-out ${delay}s infinite`;
+                        p.style.filter=`hue-rotate(${Math.random()*30-15}deg)`;
+                        container.appendChild(p);
+                        setTimeout(()=>p.remove(),(dur+delay)*1000);
+                    }
+                    for(let i=0;i<24;i++) spawn();
+                    setInterval(spawn,1000);
+                })();
+        </script>
 </body>
 </html>
