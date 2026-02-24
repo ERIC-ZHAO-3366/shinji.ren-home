@@ -1,0 +1,273 @@
+:root {
+    /* 日系配色方案 */
+    --bg-color: #fdfcf8; /* 米白色背景，类似和纸 */
+    --accent-color: #eebbcb; /* 樱花粉 */
+    --text-primary: #524e4d; /* 深灰褐色 */
+    --text-secondary: #88807b; /* 浅灰褐色 */
+    --card-bg: #ffffff;
+    --shadow: 0 10px 30px rgba(238, 187, 203, 0.2);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    /* 随机二次元背景 */
+    background: url('https://app.zichen.zone/api/acg/api.php') no-repeat center center fixed;
+    background-size: cover;
+    position: relative;
+    /* overflow-x: hidden;  不需要了 */
+}
+
+/* 樱花飘落动画 */
+.sakura {
+    position: absolute;
+    top: -10px;
+    background: #ffc0cb; /* 粉色 */
+    border-radius: 100% 0 100% 0; /* 花瓣形状 */
+    opacity: 0.7;
+    animation: fall linear forwards;
+    pointer-events: none; /* 让鼠标事件透过花瓣 */
+    z-index: 0; /* 放置在背景层，但在内容之下(如果需要覆盖内容则调大) */
+}
+
+@keyframes fall {
+    0% {
+        transform: translate(0, 0) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.8;
+    }
+    100% {
+        transform: translate(100px, 100vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+
+main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.profile-card {
+    background: var(--card-bg);
+    width: 100%;
+    max-width: 900px;
+    min-height: 400px;
+    border-radius: 50px; /* 大圆角实现弧形窗口感 */
+    display: flex;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    transition: transform 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    z-index: 10; /* 确保卡片在樱花之上 */
+    background: rgba(255, 255, 255, 0.9); /* 增加一点透明度 */
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+}
+
+.profile-card:hover {
+    transform: translateY(-5px);
+}
+
+/* 左侧：头像和名字 */
+.card-left {
+    flex: 1;
+    background: linear-gradient(135deg, #fff0f5 0%, #fff 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    border-right: 1px dashed #e0e0e0;
+    position: relative;
+}
+
+.avatar-container {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 5px solid #fff;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    margin-bottom: 20px;
+}
+
+.avatar {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.card-left:hover .avatar {
+    transform: scale(1.1);
+}
+
+.name {
+    font-size: 2rem;
+    font-weight: 500;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+    color: var(--text-primary);
+}
+
+.title {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    font-weight: 300;
+}
+
+/* 右侧：介绍 */
+.card-right {
+    flex: 1.5;
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+}
+
+/* 装饰元素 */
+.card-right::before {
+    content: '"';
+    position: absolute;
+    top: 30px;
+    left: 40px;
+    font-size: 6rem;
+    color: var(--accent-color);
+    opacity: 0.2;
+    font-family: serif;
+}
+
+.intro-title {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    position: relative;
+    display: inline-block;
+}
+
+.intro-title::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 40px;
+    height: 3px;
+    background-color: var(--accent-color);
+    border-radius: 2px;
+}
+
+.intro-text {
+    font-size: 1.05rem;
+    color: var(--text-secondary);
+    margin-bottom: 30px;
+    text-align: justify;
+}
+
+.social-links {
+    display: flex;
+    gap: 15px;
+}
+
+.social-btn {
+    text-decoration: none;
+    color: var(--text-secondary);
+    border: 1px solid #e0e0e0;
+    padding: 8px 16px;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+}
+
+.social-btn:hover {
+    background-color: var(--accent-color);
+    color: white;
+    border-color: var(--accent-color);
+}
+
+/* 底部备案信息 - 类iOS风格圆弧形长条 */
+.footer {
+    text-align: center;
+    padding: 15px 30px;
+    font-size: 0.8rem;
+    color: #333;
+    
+    /* 悬浮长条样式 */
+    background-color: rgba(255, 255, 255, 0.45); /* 稍微提高一点点不透明度 */
+    backdrop-filter: blur(15px) saturate(180%); /* 高斯模糊增强 */
+    -webkit-backdrop-filter: blur(15px) saturate(180%);
+    
+    border-radius: 50px; /* 两端完全圆弧 */
+    width: fit-content;
+    max-width: 90%;
+    margin: 20px auto; /* 居中且底部留白 */
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05); /* 轻微阴影提升悬浮感 */
+    border: 1px solid rgba(255, 255, 255, 0.3); /* 细微边框 */
+}
+
+.footer p {
+    margin: 5px 0;
+}
+
+.footer a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    margin: 0 5px;
+    transition: color 0.2s;
+}
+
+.footer a:hover {
+    color: var(--accent-color);
+}
+
+.footer-icon {
+    width: 16px; /* 公安图标通常较小 */
+    vertical-align: middle;
+    margin-right: 3px;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .profile-card {
+        flex-direction: column;
+        border-radius: 30px;
+        margin: 20px 0;
+    }
+
+    .card-left {
+        border-right: none;
+        border-bottom: 1px dashed #e0e0e0;
+        padding: 40px 20px;
+    }
+
+    .card-right {
+        padding: 40px 30px;
+    }
+
+    .card-right::before {
+        top: 20px;
+        left: 20px;
+        font-size: 5rem;
+    }
+
+    .avatar-container {
+        width: 140px;
+        height: 140px;
+    }
+}
